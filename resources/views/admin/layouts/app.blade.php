@@ -226,9 +226,13 @@
 
     <!-- =============================================== -->
 
+
     <!-- Content Wrapper. Contains page content -->
-@yield('content')
-<!-- /.content-wrapper -->
+    <div class="content-wrapper">
+        @yield('content-header')
+        @yield('content')
+    </div>
+    <!-- /.content-wrapper -->
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">

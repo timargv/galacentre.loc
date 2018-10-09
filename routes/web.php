@@ -23,8 +23,9 @@ Route::group(
         'namespace' => 'Admin',
 //        'middleware' => ['auth', 'can:admin-panel'],
     ],
-    function () {
 
+    function () {
         Route::get('/', 'HomeController@index')->name('home');
     }
+
 );
