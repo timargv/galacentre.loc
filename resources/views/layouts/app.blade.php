@@ -20,7 +20,6 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -75,13 +74,22 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="app-content py-4">
             <div class="container">
+                @section('breadcrumbs', Breadcrumbs::render())
+                @yield('breadcrumbs')
+                @include('layouts.partials.flash')
                 @yield('content')
             </div>
         </main>
-    </div>
 
+        <footer>
+            <div class="container">
+                <div class="border-top pt-3">
+                    <p>&copy; {{ date('Y') }} - {{ config('app.name', 'LaravelT') }}</p>
+                </div>
+            </div>
+        </footer>
 
 </body>
 </html>

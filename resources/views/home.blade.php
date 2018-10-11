@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-{{--@section('breadcrumbs', '')--}}
+@section('breadcrumbs', '')
 
 @section('content')
 
