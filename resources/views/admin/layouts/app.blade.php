@@ -264,8 +264,15 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @yield('content-header')
-        @yield('content')
+        <section class="content-header">
+            @yield('header-title')
+            @section('breadcrumbs', Breadcrumbs::render())
+            @yield('breadcrumbs')
+        </section>
+
+        <section class="content">
+            @yield('content')
+        </section>
     </div>
     <!-- /.content-wrapper -->
 

@@ -8,7 +8,7 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Категории</span></a></li>
+            <li><a href="{{ route('admin.products.categories.index') }}"><i class="fa fa-circle-o text-red"></i> <span>Категории</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-blue"></i> <span>Товары</span></a></li>
         </ul>
     </li>
@@ -20,7 +20,7 @@
         </span>
         </a>
     </li>
-    <li><a href=""><i class="fa fa-users"></i> <span>Пользователи</span></a></li>
+    <li><a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> <span>Пользователи</span></a></li>
     <li><a href=""><i class="fa fa-user-plus"></i> <span>Подписчики</span></a></li>
 
 </ul>

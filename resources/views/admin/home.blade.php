@@ -1,21 +1,19 @@
 @extends('admin.layouts.app')
 
-@section('content-header')
-    <section class="content-header">
-        <h1>
-            Привет! Это админка
-            <small>приятные слова..</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-        </ol>
-    </section>
+@section('breadcrumbs')
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    </ol>
+@endsection
+
+@section('header-title')
+    <h1>
+        Привет! Это админка
+        <small>приятные слова..</small>
+    </h1>
 @stop
 
 @section('content')
-        <!-- Main content -->
-        <section class="content">
 
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
@@ -91,7 +89,4 @@
                 <!-- /.box-footer-->
             </div>
             <!-- /.box -->
-
-        </section>
-        <!-- /.content -->
 @stop
