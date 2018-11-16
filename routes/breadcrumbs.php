@@ -1,6 +1,8 @@
 <?php
 
+use App\Entity\Products\Product\Product;
 use App\Entity\User;
+use App\Entity\Products\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
 
 Breadcrumbs::register('home', function (Crumbs $crumbs) {
@@ -70,14 +72,53 @@ Breadcrumbs::register('admin.users.edit', function (Crumbs $crumbs, User $user) 
 });
 
 
-// Products
-Breadcrumbs::register('adverts.inner_category', function (Crumbs $crumbs, AdvertsPath $path, AdvertsPath $orig) {
-    if ($path->category && $parent = $path->category->parent) {
-        $crumbs->parent('adverts.inner_category', $path->withCategory($parent), $orig);
+// Product Category
+Breadcrumbs::register('admin.products.categories.index', function (Crumbs $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Категории', route('admin.products.categories.index'));
+});
+Breadcrumbs::register('admin.products.categories.create', function (Crumbs $crumbs) {
+    $crumbs->parent('admin.products.categories.index');
+    $crumbs->push('Create', route('admin.products.categories.create'));
+});
+
+Breadcrumbs::register('admin.products.categories.show', function (Crumbs $crumbs, Category $category) {
+    if ($parent = $category->parent) {
+        $crumbs->parent('admin.products.categories.show', $parent);
     } else {
-        $crumbs->parent('adverts.inner_region', $orig);
+        $crumbs->parent('admin.products.categories.index');
     }
-    if ($path->category) {
-        $crumbs->push($path->category->name, route('adverts.index', $path));
+    $crumbs->push($category->name_original, route('admin.products.categories.show', $category));
+});
+
+Breadcrumbs::register('admin.products.categories.edit', function (Crumbs $crumbs, Category $category) {
+    $crumbs->parent('admin.products.categories.show', $category);
+    $crumbs->push('Edit', route('admin.products.categories.edit', $category));
+});
+
+Breadcrumbs::register('admin.products.products.index', function (Crumbs $crumbs) {
+    $crumbs->parent('admin.home');
+    $crumbs->push('Товары', route('admin.products.products.index'));
+});
+
+Breadcrumbs::register('admin.products.products.show', function (Crumbs $crumbs, Product $product) {
+    $crumbs->parent('admin.products.products.index');
+    $crumbs->push($product->name_original, route('admin.products.products.show', $product));
+});
+
+
+
+//------
+Breadcrumbs::register('products.index', function (Crumbs $crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Каталог', route('products.index'));
+});
+
+Breadcrumbs::register('categories.show', function (Crumbs $crumbs, Category $category) {
+    if ($parent = $category->parent) {
+        $crumbs->parent('categories.show', $parent);
+    } else {
+        $crumbs->parent('home');
     }
+    $crumbs->push($category->name_original, route('categories.show', $category));
 });

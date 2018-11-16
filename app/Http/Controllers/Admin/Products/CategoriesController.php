@@ -10,9 +10,18 @@ class CategoriesController extends Controller
 {
 
     //=================================
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::defaultOrder()->withDepth()->get();
+        $categories = Category::defaultOrder();
+
+        $query = $categories;
+
+        if (!empty($value = $request->get('name_original'))) {
+            $query->where('name_original', 'like', '%' . $value . '%');
+        }
+
+        $categories = $query->withDepth()->paginate(50);
+
         return view('admin.products.categories.index', compact('categories'));
     }
 
@@ -30,13 +39,13 @@ class CategoriesController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255',
             'parent' => 'nullable|integer|exists:product_categories,id',
         ]);
 
         $category = Category::create([
             'name' => $request['name'],
-            'slug' => $request['slug'],
+            'slug' => str_slug($request->name_original),
 
             'name_original' => $request['name_original'],
             'name_h1'       => $request['name_h1'],
@@ -59,7 +68,8 @@ class CategoriesController extends Controller
     //=================================
     public function show(Category $category)
     {
-        return view('admin.products.categories.show', compact('category'));
+        $categories = Category::where('parent_id', $category->id)->defaultOrder()->get();
+        return view('admin.products.categories.show', compact('category', 'categories'));
     }
 
 
@@ -99,6 +109,42 @@ class CategoriesController extends Controller
         ]);
 
         return redirect()->route('admin.products.categories.show', $category);
+    }
+
+
+    //=================================
+    public function first(Category $category)
+    {
+        if ($first = $category->siblings()->defaultOrder()->first()) {
+            $category->insertBeforeNode($first);
+        }
+        return redirect()->back();
+    }
+
+
+    //=================================
+    public function up(Category $category)
+    {
+        $category->up();
+        return redirect()->back();
+    }
+
+
+    //=================================
+    public function down(Category $category)
+    {
+        $category->down();
+        return redirect()->back();
+    }
+
+
+    //=================================
+    public function last(Category $category)
+    {
+        if ($last = $category->siblings()->defaultOrder('desc')->first()) {
+            $category->insertAfterNode($last);
+        }
+        return redirect()->back();
     }
 
 

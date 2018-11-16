@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Console\Command;
 
+/**
+ * @property  output
+ */
 class CategoriesTableSeeder extends Seeder
 {
     /**
@@ -22,6 +26,8 @@ class CategoriesTableSeeder extends Seeder
 
         $categories = [];
 
+        $this->command->getOutput()->progressStart(count($catalogs));
+
         foreach ($catalogs as $key => $item) {
 
             if (!empty($value = $item->id)) {
@@ -36,16 +42,24 @@ class CategoriesTableSeeder extends Seeder
                             'status' => $categories[$key] = $item->active,
                             'count' => $categories[$key] = $item->count,
                             'date' => $categoriesDate->TIMESTAMP,
+                            'slug' => str_slug($categories[$key] = $item->name),
                         ]
                     );
                 }
             }
 
+            $this->command->getOutput()->progressAdvance();
+
+
         }
+
+        $this->command->getOutput()->progressFinish();
 
         if (count($query) == count($catalogs)) {
             $this->command->comment("Новых категории нет"  , 'red');
-        } $this->command->comment("Добавлены Новые категории"  , 'red');
+        } elseif (count($query) < count($catalogs)) {
+            $this->command->comment("Добавлены Новые категории"  , 'red');
+        }
 
         \App\Entity\Products\Category::fixTree();
 

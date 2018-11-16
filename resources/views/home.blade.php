@@ -14,12 +14,14 @@
                     <div class="col-4">
                         <ul class="list-unstyled">
                             @foreach ($chunk as $current)
-                                <li><a href="">{{ $current->name_original }}</a> - {{ $current->id }}</li>
+                                <li><a href="{{ route('categories.show', $current->id) }}">{{ $current->name_original }}</a> - {{ $current->id }}</li>
                             @endforeach
                         </ul>
                     </div>
                 @endforeach
             </div>
+
+
         </div>
     </div>
 

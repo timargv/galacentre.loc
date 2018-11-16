@@ -5,6 +5,9 @@ namespace App\Entity\Products;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
+/**
+ * @property mixed id
+ */
 class Category extends Model
 {
 
