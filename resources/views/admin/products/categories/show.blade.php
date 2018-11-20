@@ -85,4 +85,16 @@
              @include('admin.products.categories._list', ['categories' => $categories])
         </div>
     </div>
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h1 class="box-title">Продукты - @if(count($categories) == null) Нет @else <strong>{{ $category->name_original }}</strong> @endif </h1>
+        </div>
+        <div class="box-body">
+            @include('admin.products.products._list', ['products' => $products])
+            {{ $products->links() }}
+        </div>
+    </div>
+
+
 @endsection

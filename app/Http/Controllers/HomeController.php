@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Entity\Products\Category;
 use App\Entity\Products\Product\Product;
+use DB;
 
 class HomeController extends Controller
 {
@@ -36,12 +37,19 @@ class HomeController extends Controller
         return view('home', compact('categories'));
     }
 
-    public function show(Category $category)
+    public function show(Category $category, Product $product)
     {
-        $query = $category ? $category->children() : Category::whereIsRoot();
+        $query = $category ? $category->children()->where('status', '=', 'Y') : Category::whereIsRoot();
         $categories = $query->defaultOrder()->getModels();
-        $products = Product::where('category_id', $category->id)->paginate(18);
+        $products = Product::where('category_id', $category->id)->paginate(16);
 
-        return view('products.index', compact('categories', 'products', 'category'));
+
+
+        return view('products.index', compact('categories', 'products', 'category', 'product', 'res'));
+    }
+
+    public function showProduct(Product $product)
+    {
+        return view('products.show', compact('product'));
     }
 }

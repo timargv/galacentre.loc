@@ -122,3 +122,10 @@ Breadcrumbs::register('categories.show', function (Crumbs $crumbs, Category $cat
     }
     $crumbs->push($category->name_original, route('categories.show', $category));
 });
+
+
+// Product SHOW
+Breadcrumbs::register('product.show', function (Crumbs $crumbs, Product $product) {
+    $crumbs->parent('categories.show', $product->category);
+    $crumbs->push($product->name_original, route('product.show', $product));
+});

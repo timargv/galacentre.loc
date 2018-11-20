@@ -12,13 +12,30 @@
 */
 
 
+//use App\Entity\Products\Product\Product;
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/categories/{category}', 'HomeController@show')->name('categories.show');
+Route::get('/product/{product}', 'HomeController@showProduct')->name('product.show');
 
 
 //use App\Entity\Products\Product\Product;
 //
-//Route::get('/', function (){
+//Route::get('/', function () {
+//
+//    $product = Product::where('article', '=', '771-331')->first();
+//
+//    dd($product->date_update);
+//
+//    if ($product != false) {
+//        $productStk = $product->stk + 1;
+//
+//        $product->update([
+//            'stk' => $productStk
+//        ]);
+//    }
+//});
+
 //
 //
 //

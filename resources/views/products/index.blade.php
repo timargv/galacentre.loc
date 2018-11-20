@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('breadcrumbs', '')
+
 
 @section('content')
     @if ($categories)
         <div class="card card-default mb-3">
             <div class="card-header">
                 @if ($category)
-                    {{ $category->name }}
+                    {{ $category->name_original }}
                 @else
                     Categories
                 @endif
@@ -18,7 +18,11 @@
                         <div class="col-4">
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
-                                    <li><a href="{{ route('categories.show', $current->id) }}">{{ $current->name_original }}</a> - {{ $current->id }}</li>
+                                    <li>{{ $current->id }} - <a href="{{ route('categories.show', $current->id) }}">
+                                            {{ $current->name == null ? $current->name_original : $current->name }}
+                                        </a>
+                                        @if($current->products->count())<span class='badge badge-light'> {{ $current->products->count() }} </span> @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -26,30 +30,38 @@
                 </div>
             </div>
         </div>
-
-        <div class="card card-default mb-3">
-            <div class="card-header">
-                Товары
-            </div>
-            <div class="card-body pb-0" style="color: #aaa">
-                <div class="row">
-                    @foreach ($products as $product)
-                        <div class="advert">
-                            <div style="height: 180px; background: #f6f6f6; border: 1px solid #ddd"></div>
-                        </div>
-                        <div class="w-12">
-                            <span class="">{{ $product->price }}</span>
-                            <div class="h4" style="margin-top: 0"><a href="">{{ $product->title }}</a></div>
-                            <p>Category: <a href="">{{ $product->category->name_original }}</a></p>
-                            <p>Date: {{ $product->created_at }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div>
-                {{ $products->links() }}
-            </div>
-        </div>
     @endif
+
+
+    @if($products)
+
+        @foreach ($products->chunk(4) as $chunk)
+            <div class="mb-3 row">
+                @foreach ($chunk as $product)
+                    <div class="col-3">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ $product->image }}" alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title"><a href="{{ route('product.show', $product) }}">{{ $product->name == null ? $product->name_original : $product->name }}</a></h6>
+
+                                {{--<p class="card-text">Category: <a href="">{{ $product->category->name_original }}</a></p>--}}
+                                {{--<p class="card-text">Date: {{ $product->created_at }}</p>--}}
+                            </div>
+                            <div class="card-footer">
+                                {{ $product->price == null ? $product->price_base : $product->price }} Руб.<small class="text-muted"></small>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endforeach
+
+    <div>
+        {{ $products->links() }}
+    </div>
+
+    @endif
+
+
 @endsection
 

@@ -2,10 +2,14 @@
 
     @if(count($categories) != null)
     <table class="table no-margin">
+        <form action="?" method="GET" class="form-inline">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th style="min-width: 150px;">
+                <label for="stk" class="col-form-label" style="margin: 0; cursor: pointer;">Name</label>
+                <button style="padding: 0;" type="submit" id="stk" class="btn btn-xs btn-box-tool" name="name" value="{{ request('name') === 'desc' ? 'asc' : 'desc' }}"><i class="fa fa-sort-alpha-{{ request('name') === 'desc' ? 'desc' : 'asc' }}" aria-hidden="true"></i></button>
+            </th>
             <th>Name Оригинал</th>
             <th>Slug</th>
             <th width="200px">Position</th>
@@ -14,6 +18,7 @@
             <th class="text-right">Delete</th>
         </tr>
         </thead>
+        </form>
         <tbody>
         @foreach($categories as $category)
             <tr>

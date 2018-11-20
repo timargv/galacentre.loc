@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Entity\Products\Category;
+use App\Entity\Products\Product\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,14 +11,24 @@ class CategoriesController extends Controller
 {
 
     //=================================
-    public function index(Request $request)
+    public function index(Request $request, Category $category)
     {
+
+
         $categories = Category::defaultOrder();
 
         $query = $categories;
 
         if (!empty($value = $request->get('name_original'))) {
             $query->where('name_original', 'like', '%' . $value . '%');
+        }
+
+        if (!empty($value = $request->get('name'))) {
+            $query = $category->orderByDesc('name');
+        }
+
+        if (!empty($value = $request->get('category_id'))) {
+            $query->where('id', $value);
         }
 
         $categories = $query->withDepth()->paginate(50);
@@ -69,7 +80,8 @@ class CategoriesController extends Controller
     public function show(Category $category)
     {
         $categories = Category::where('parent_id', $category->id)->defaultOrder()->get();
-        return view('admin.products.categories.show', compact('category', 'categories'));
+        $products = Product::where('category_id', $category->id)->paginate(15);
+        return view('admin.products.categories.show', compact('category', 'categories', 'products'));
     }
 
 

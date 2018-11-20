@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('header-title')
-    <h1> Товары <small>..</small></h1>
+    <h1> Товары <small>Количество товаров - <span id="countProducts">{{ $countProducts }}</span></small></h1>
 @endsection
 
 @section('content')
@@ -13,54 +13,7 @@
 
                 {{--</div>--}}
                 <div class="box-body">
-
-
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th width="5px">ID</th>
-                            <th width="80px">Код</th>
-                            <th width="40px">Картинка</th>
-                            <th width="600px">Навание</th>
-                            <th>Кол-во</th>
-                            <th>MSK</th>
-                            <th>Цена</th>
-                            <th>Кат-я</th>
-                            <th>Date Update</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        @foreach ($products as $product)
-                            <tr>
-                                <td>{{ $product->id }}</td>
-                                <td>{{ $product->article }}</td>
-                                <td><img src="{{ $product->image }}" alt="" width="40px"><i class="fa fa-circle {{ $product->status === 'Y' ? 'text-success' : 'text-denger' }}"></i></td>
-                                <td><a href="{{ route('admin.products.products.show', $product) }}" target="_blank">{{ $product->name_original }}</a></td>
-                                <td>{{ $product->stk }} </td>
-                                <td>{{ $product->store_msk }} </td>
-                                <td>{{ $product->price_base }} </td>
-                                <td>{{ $product->category->id }}</td>
-                                <td class="{{ $product->statusDate($product->date_update) }}">{{ $product->gDateF($product->date_update) }}</td>
-
-
-                                <td>
-                                    {{--@if ($advert->isDraft())--}}
-                                    {{--<span class="badge badge-secondary">Draft</span>--}}
-                                    {{--@elseif ($advert->isOnModeration())--}}
-                                    {{--<span class="badge badge-primary">Moderation</span>--}}
-                                    {{--@elseif ($advert->isActive())--}}
-                                    {{--<span class="badge badge-primary">Active</span>--}}
-                                    {{--@elseif ($advert->isClosed())--}}
-                                    {{--<span class="badge badge-secondary">Closed</span>--}}
-                                    {{--@endif--}}
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        </tbody>
-                    </table>
-
+                    @include('admin.products.products._list', ['products' => $products])
                     {{ $products->links() }}
                 </div>
             </div>
@@ -103,4 +56,22 @@
             margin-left: 15px !important;
         }
     </style>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        $('#countProducts').each(function () {
+            var item = $(this).text();
+            var num = Number(item).toLocaleString('en');
+
+            if (Number(item) < 0) {
+                num = num.replace('-','');
+                $(this).addClass('negMoney');
+            }else{
+                $(this).addClass('enMoney');
+            }
+
+            $(this).text(num);
+        });
+    </script>
 @endsection

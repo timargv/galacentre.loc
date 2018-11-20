@@ -16,8 +16,7 @@ class ProductsController extends Controller
      */
 
 
-
-    public function index(Request $request)
+    public function index(Request $request, Product $product)
     {
 
 
@@ -29,6 +28,22 @@ class ProductsController extends Controller
 
         if (!empty($value = $request->get('article'))) {
             $query->where('article', $value);
+        }
+
+        if (!empty($value = $request->get('category'))) {
+            $query->where('category_id', $value);
+        }
+
+        if (!empty($value = $request->get('stk'))) {
+            $query = $product->orderByDesc('stk');
+        }
+
+        if (!empty($value = $request->get('date_update'))) {
+            $query = $product->orderByDesc('date_update');
+        }
+
+        if (!empty($value = $request->get('price_base'))) {
+            $query = $product->orderByDesc('price_base');
         }
 
         $products = $query->paginate(20);

@@ -85,12 +85,14 @@ class Product extends Model implements ToModel
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-//    public function countProductGalaCentre() {
-//        $json = file_get_contents('http://www.galacentre.ru/api/v2/catalog/json/?key=d27b9aa09102f001d6f6f5c5fc97d222&store=msk');
-//        $data =  array_merge((array) json_decode($json));
-//        $getProducts = $data['DATA'];
-//        return count($getProducts);
-//    }
+    public function productSort($value, $column, $query) {
+        if ($value == 'desc') {
+            $query->orderByDesc($column);
+        } else{
+            $query->orderBy($column);
+        }
+        return $query;
+    }
     /**
      * @param array $row
      *

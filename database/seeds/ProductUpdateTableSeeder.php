@@ -18,7 +18,7 @@ class ProductUpdateTableSeeder extends Seeder
     public function run(Product $queryProd)
     {
 
-        $filename = '16112018.xlsx';
+        $filename = 'update-price.xlsx';
         $path =  public_path('files\\' . $filename);
 
 //        dd($path);
@@ -34,8 +34,6 @@ class ProductUpdateTableSeeder extends Seeder
                 ]);
             }
             $this->command->getOutput()->progressAdvance();
-
-
         });
 
         $this->command->getOutput()->progressFinish();

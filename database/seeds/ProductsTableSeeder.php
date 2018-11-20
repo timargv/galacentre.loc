@@ -202,6 +202,7 @@ class ProductsTableSeeder extends Seeder
 
 
         $this->call(ProductUpdateTableSeeder::class);
+        $this->call(ProductUpdatePlusTableSeeder::class);
 
     }
 }

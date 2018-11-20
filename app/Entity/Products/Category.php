@@ -2,6 +2,7 @@
 
 namespace App\Entity\Products;
 
+use App\Entity\Products\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
@@ -30,6 +31,10 @@ class Category extends Model
         'icon',
         'slug'
     ];
+
+    public function products(){
+        return $this->hasMany(Product::class, 'category_id');
+    }
 
 
 }

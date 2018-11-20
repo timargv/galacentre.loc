@@ -45,6 +45,10 @@
                             <div class="form-group">
                                 <input type="search" class="form-control" name="name_original" value="{{ request('name_original') }}" placeholder="Название категории">
                             </div>
+                            <div class="form-group">
+                                <input type="search" class="form-control" name="category_id" value="{{ request('category_id') }}" placeholder="id категории">
+                            </div>
+
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Найти</button>

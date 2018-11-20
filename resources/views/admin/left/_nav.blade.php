@@ -8,8 +8,18 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li class="{{{ (Request::is('admin/products/categories*') ? 'treeview active' : 'treeview') }}}"><a href="{{ route('admin.products.categories.index') }}"><i class="fa fa-circle-o text-red"></i> <span>Категории</span></a></li>
-            <li class="{{{ (Request::is('admin/products/products*') ? 'treeview active' : 'treeview') }}}"><a href="{{ route('admin.products.products.index') }}"><i class="fa fa-circle-o text-blue"></i> <span>Товары</span></a></li>
+            <li class="{{{ (Request::is('admin/products/categories*') ? 'treeview active' : 'treeview') }}}"><a href="{{ route('admin.products.categories.index') }}"><i class="fa fa-circle-o text-red"></i> <span>Категории</span>
+                    <span class="pull-right-container">
+                      <small class="label pull-right bg-olive">{{ $countCategories }}</small>
+                    </span>
+                </a>
+            </li>
+            <li class="{{{ (Request::is('admin/products/products*') ? 'treeview active' : 'treeview') }}}"><a href="{{ route('admin.products.products.index') }}"><i class="fa fa-circle-o text-blue"></i> <span>Товары</span>
+                    <span class="pull-right-container">
+                      <small class="label pull-right bg-olive">{{ $countProducts }}</small>
+                    </span>
+                </a>
+            </li>
         </ul>
     </li>
     <li><a href=""><i class="fa fa-tags"></i> <span>Теги</span></a></li>

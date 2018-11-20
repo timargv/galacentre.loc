@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^1.1",
-        "rap2hpoutre/fast-excel": "^0.11.0"
+        "rap2hpoutre/fast-excel": "^0.11.0",
+        "salsify/json-streaming-parser": "^8.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

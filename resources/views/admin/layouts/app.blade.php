@@ -292,5 +292,7 @@
 <script src="/plugins/ckeditor/ckeditor.js"></script>
 <script src="/plugins/ckfinder/ckfinder.js"></script>
 
+@yield('js')
+
 </body>
 </html>
