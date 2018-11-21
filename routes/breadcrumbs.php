@@ -120,7 +120,7 @@ Breadcrumbs::register('categories.show', function (Crumbs $crumbs, Category $cat
     } else {
         $crumbs->parent('home');
     }
-    $crumbs->push($category->name_original, route('categories.show', $category));
+    $crumbs->push($category->name == null ? $category->name_original : $category->name, route('categories.show', $category));
 });
 
 
