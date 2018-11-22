@@ -44,5 +44,7 @@ class ProductUpdatePlusTableSeeder extends Seeder
         } else {
             $this->command->error("Нет файла");
         }
+
+        $this->command->comment(date(H:m));
     }
 }

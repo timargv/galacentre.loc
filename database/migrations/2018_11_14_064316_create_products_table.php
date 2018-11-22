@@ -47,6 +47,7 @@ class CreateProductsTable extends Migration
             $table->integer('store_nsk')->nullable();                   // Наличие Новосибирск
 
             $table->string('image')->nullable();
+            $table->json('images')->nullable();
 
             $table->string('way')->nullable();
             $table->json('sert')->nullable();
@@ -58,6 +59,7 @@ class CreateProductsTable extends Migration
             $table->string('status', 16);
 
             $table->string('date_update')->nullable();
+            $table->string('slug')->nullable();
 
             $table->timestamps();
         });

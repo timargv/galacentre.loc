@@ -37,6 +37,7 @@ class ProductUpdateTableSeeder extends Seeder
         });
 
         $this->command->getOutput()->progressFinish();
+        $this->command->comment(date(H:m));
 
 //        $users = (new FastExcel)->import('file.xlsx', function ($line) {
 //            return User::create([

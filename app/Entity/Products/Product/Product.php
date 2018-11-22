@@ -51,6 +51,7 @@ class Product extends Model implements ToModel
         'props',
         'specifications',
         'includes',
+        'images',
     ];
 
     protected $casts = [
@@ -58,6 +59,7 @@ class Product extends Model implements ToModel
         'specifications' => 'array',
         'includes' => 'array',
         'props' => 'array',
+        'images' => 'array',
     ];
 
     public function gDateF($dateGala)

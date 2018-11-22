@@ -14,7 +14,7 @@
                     <div class="col-4">
                         <ul class="list-unstyled">
                             @foreach ($chunk as $current)
-                                <li><a href="{{ route('categories.show', $current->id) }}">{{ $current->name_original }}</a> - {{ $current->id }}</li>
+                                <li>{{ $current->id }} - <a href="{{ route('categories.show', $current->id) }}">{{ $current->name_original }}</a></li>
                             @endforeach
                         </ul>
                     </div>

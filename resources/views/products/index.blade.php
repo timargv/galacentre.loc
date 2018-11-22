@@ -40,9 +40,9 @@
                 @foreach ($chunk as $product)
                     <div class="col-3">
                         <div class="card">
-                            <img class="card-img-top" src="{{ $product->image }}" alt="Card image cap">
+                            <a href="{{ route('product.show', $product) }}"><img class="card-img-top" src="{{ $product->image }}" alt="Card image cap"></a>
                             <div class="card-body">
-                                <h6 class="card-title"><a href="{{ route('product.show', $product) }}">{{ $product->name == null ? $product->name_original : $product->name }}</a></h6>
+                                <h6 ><a class="text-dark" href="{{ route('product.show', $product) }}">{{ $product->name == null ? $product->name_original : $product->name }}</a></h6>
 
                                 {{--<p class="card-text">Category: <a href="">{{ $product->category->name_original }}</a></p>--}}
                                 {{--<p class="card-text">Date: {{ $product->created_at }}</p>--}}

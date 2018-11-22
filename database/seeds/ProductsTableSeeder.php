@@ -113,7 +113,7 @@ class ProductsTableSeeder extends Seeder
 //        }
 
 
-//        $json = file_get_contents('http://www.galacentre.ru/api/v2/catalog/json/?key=d27b9aa09102f001d6f6f5c5fc97d222&section=7494&store=msk');
+       // $json = file_get_contents('http://www.galacentre.ru/api/v2/catalog/json/?key=d27b9aa09102f001d6f6f5c5fc97d222&section=7494&store=msk');
         $json = file_get_contents('http://www.galacentre.ru/api/v2/catalog/json/?key=d27b9aa09102f001d6f6f5c5fc97d222&store=msk');
         $data =  array_merge((array) json_decode($json));
         $products = $data['DATA'];
@@ -150,7 +150,41 @@ class ProductsTableSeeder extends Seeder
                     $countProdUpdate++;
                 }
 
+
             } elseif ( $prodQ == false ) {
+
+                $product_data =  array_merge((array) $product);
+
+                if (!empty($product_data{'props'})) {
+                    $props = $product->props;
+                } else {
+                    $props = [];
+                }
+
+                if (!empty($product_data{'includes'})) {
+                    $includes = $product->includes;
+                } else {
+                    $includes = [];
+                }
+
+                if (!empty($product_data{'specifications'})) {
+                    $specifications = $product->specifications;
+                } else {
+                    $specifications = [];
+                }
+
+                if (!empty($product_data{'sert'})) {
+                    $sert = $product->sert;
+                } else {
+                    $sert = [];
+                }
+
+                if (!empty($product_data{'images'})) {
+                    $images = $product->images;
+                } else {
+                    $images = [];
+                }
+
                 Product::create(
                     [
                         'galaId' =>             $product->id,
@@ -160,6 +194,7 @@ class ProductsTableSeeder extends Seeder
                         'name_original' =>      $product->name,
                         'full_description' =>   $product->about,
                         'image' =>              $product->image,
+                        'images' =>             $images,
                         'category_id' =>        $product->section,
                         'price_base' =>         $product->price_base,
                         'price_old' =>          $product->price_old,
@@ -174,9 +209,11 @@ class ProductsTableSeeder extends Seeder
                         'store_nsk' =>          $product->store_nsk,
                         'way' =>                $product->way,
                         'barcode' =>            $product->barcode,
-//                        'props' =>              $item->props,
-//                        'specifications' =>     $item->specifications,
-//                        'includes' =>           $item->includes,
+                        'slug' =>               str_slug($product->name),
+                        'sert' =>               $sert,
+                        'props' =>              $props,
+                        'specifications' =>     $specifications,
+                        'includes' =>           $includes,
                     ]
                 );
 
@@ -187,6 +224,7 @@ class ProductsTableSeeder extends Seeder
             $this->command->getOutput()->progressAdvance();
 
         }
+
 
         $this->command->getOutput()->progressFinish();
 
@@ -199,6 +237,8 @@ class ProductsTableSeeder extends Seeder
             $this->command->comment("Обновлено $countProdUpdate");
             $this->command->comment("Добавлено $countProdCreate");
         }
+        $this->command->comment(date(H:m));
+
 
 
         $this->call(ProductUpdateTableSeeder::class);
