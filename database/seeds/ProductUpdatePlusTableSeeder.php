@@ -45,6 +45,6 @@ class ProductUpdatePlusTableSeeder extends Seeder
             $this->command->error("Нет файла");
         }
 
-        $this->command->comment(date(H:m));
+        $this->command->comment(date('Y-m-d H:i:s'));
     }
 }

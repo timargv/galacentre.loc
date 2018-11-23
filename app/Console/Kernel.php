@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+//        Commands\Search\InitCommand::class,
+//        Commands\Search\ReindexCommand::class,
     ];
 
     /**

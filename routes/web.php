@@ -17,6 +17,10 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/categories/{category}', 'HomeController@show')->name('categories.show');
 Route::get('/products/{product}', 'HomeController@showProduct')->name('product.show');
+Route::get('/search', 'HomeController@search')->name('product.search');
+
+
+
 
 
 Route::get('/verify/{token}', 'Auth\RegisterController@verify')->name('register.verify');

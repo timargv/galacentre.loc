@@ -36,5 +36,13 @@ class Category extends Model
         return $this->hasMany(Product::class, 'category_id');
     }
 
+    public function countProducts ($category)
+    {
+        $categoryIds = $category->descendants()->pluck('id');
+        $productCount = Product::whereIn('category_id', $categoryIds)->getModels();
+        return count($productCount);
+    }
+
+
 
 }

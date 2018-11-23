@@ -6,11 +6,14 @@
  */
 
 require('./bootstrap');
- 
-// require('~ekko-lightbox/dist/ekko-lightbox.min.js');
+require('typeahead/typeahead.js');
 require('ekko-lightbox/dist/ekko-lightbox.min.js');
 
 $(document).on("click", '[data-toggle="lightbox"]', function(event) {
   event.preventDefault();
   $(this).ekkoLightbox();
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

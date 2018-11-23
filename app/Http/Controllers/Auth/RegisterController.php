@@ -33,7 +33,7 @@ class RegisterController extends Controller
         $this->service->register($request);
 
         return redirect()->route('login')
-            ->with('success', 'Check your email and click on the link to verify.');
+            ->with('success', 'Check your email and click on the link to verify. (Проверьте свою электронную почту и нажмите ссылку, чтобы подтвердить.)');
     }
 
 

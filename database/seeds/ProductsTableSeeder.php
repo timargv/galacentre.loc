@@ -237,7 +237,7 @@ class ProductsTableSeeder extends Seeder
             $this->command->comment("Обновлено $countProdUpdate");
             $this->command->comment("Добавлено $countProdCreate");
         }
-        $this->command->comment(date(H:m));
+        $this->command->comment(date('Y-m-d H:i:s'));
 
 
 

@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
-
+@section('title', $product['name_original'].' - '.$product['price_base'].' Руб')
 
 @section('content')
 
     <div class="row pt-3">
-
-
 
         <div class="col-5">
             <a href="{{ $product->image }}" data-toggle="lightbox" data-gallery="example-gallery" data-height="700" data-max-height="700">
@@ -23,22 +21,66 @@
                     @endforeach
                 </div>
             </div> 
-            @endif     
+            @endif   
+
+            @if($product->sert)
+            
+           
+            <div class="w-100 bg-white shadow-sm my-4">
+                <div class="h4 pt-3 px-2 d-block">Сертификаты</div>
+                <div class="pt-2 pl-2 justify-content-center clearfix">
+                    @foreach($product->sert as $key => $image)
+                        <a href={{ $image }}?image=180" data-toggle="lightbox" data-gallery="example-gallery-2" class="float-left pr-2 w-25 pb-2" alt="{{ $product->name_original }}-{{ $key }}">
+                            <div class="p-1 bg-secondary">
+                                <img src="{{ $image }}?image=180" class="img-fluid" alt="{{ $product->name_original }}-{{ $key }}">
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div> 
+            @endif    
 
         </div>
         <div class="col-7">
 
-            <h1 class="h4 mb-5">{{ $product->name == null ? $product->name_original : $product->name }} <small class="text-muted text-small">#{{ $product->article }}</small></h1>
+            <h1 class="h4 mb-4">
+                @if($product->hit)<strong class="bg-danger text-dark px-1 mr-1 rounded">{{ $product->hit != null ? 'ХИТ' : '' }}</strong>@endif
+                @if($product->new)<strong class="bg-info text-white px-1 mr-1 rounded">{{ $product->new != null ? 'NEW' : '' }}</strong>@endif
+                @if($product->price_sp)<strong class="bg-success text-white px-1 mr-1 rounded" data-toggle="tooltip" data-placement="top" title="Спецпредложение">{{ $product->price_sp != null ? 'СП' : '' }}</strong>@endif
+                {{ $product->name == null ? $product->name_original : $product->name }} <small class="text-muted text-small">#{{ $product->article }}</small> 
+            </h1>
 
-            <div class="w-100 shadow-sm p-3 mb-4 bg-white rounded ">
+            <div class="w-100 shadow-sm p-4 mb-4 bg-white rounded ">
                 <div class="block">
                     <div class="stk h6 mb-3">
-                        <strong class="text-muted " >В Наличии: </strong> @if($product->store_msk) <span class="text-success pl-2">{{ $product->stk == null ? $product->store_msk : $product->stk }}</span> шт.@else <span class="text-danger">Нет в наличии</span> @endif <small class="text-muted"></small>
-                    </div>
-                    <div class="price h4 mb-3">
-                         <strong class="text-muted " >Цена: </strong> {{ $product->price == null ? $product->price_base : $product->price }} Руб.<small class="text-muted"></small>
+                        <strong class="text-muted " >На складе: </strong> 
+                        @if($product->store_msk) 
+                            <span class="text-success pl-2">{{ $product->stk == null ? $product->store_msk : $product->stk }}</span> шт.
+                        @else 
+                            <span class="text-danger">Товара временно нет в наличии</span><br />
+                            <small class="text-muted"><i class="fa fa-truck"></i> Поступление ожидается {{ $product->way }}</small> 
+                        @endif 
+                        <small class="text-muted"></small>
                     </div>
 
+                    <div class="price h4 mb-3">
+                        <blockquote class="blockquote">
+                            <p class="h3 pl-0 ">{{ $product->price == null ? $product->price_base : $product->price }} Руб.</p>
+                            <footer class="blockquote-footer">мин. заказ: {{ $product->min }}, в коробке: {{ $product->box }} </footer>
+                        </blockquote>
+                    </div>
+
+                    @if($product->price_sp)
+                    <div class="price_sp bg-success bg-gradient-info  text-white row mb-3">
+                        <div class="col py-3 px-4">
+                            <div class="d-block">Цена спецпредложения:</div>
+                            <div class="h3 py-0 mb-0"><strong>{{ $product->price_sp }}</strong> Руб. </div>
+                            <div><small class="">Количество ограничено. Подробности у менеджеров.</small></div>
+                        </div>
+                    </div>
+                    @endif
+ 
+    
                     @if($product->props)
                     <div class="props  mb-3">
                          <strong class="text-muted pb-3" >Основные свойства товара: </strong>

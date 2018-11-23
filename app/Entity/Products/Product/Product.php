@@ -3,6 +3,7 @@
 namespace App\Entity\Products\Product;
 
 use App\Entity\Products\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -15,11 +16,16 @@ use Maatwebsite\Excel\Concerns\ToModel;
  * @property \Carbon\Carbon $created_at
  * @property int $id
  * @property \Carbon\Carbon $updated_at
+ *
+ * * @method Builder active()
  */
 class Product extends Model implements ToModel
 {
     //
     protected $table = 'products';
+
+    public const STATUS_ACTIVE = 'Y';
+    public const STATUS_CLOSED = 'N';
 
     protected $fillable = [
         'galaId',
@@ -95,6 +101,12 @@ class Product extends Model implements ToModel
         }
         return $query;
     }
+
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
     /**
      * @param array $row
      *
@@ -106,4 +118,6 @@ class Product extends Model implements ToModel
             'stk' => $row[3]
         ]);
     }
+
+
 }

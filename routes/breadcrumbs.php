@@ -6,7 +6,7 @@ use App\Entity\Products\Category;
 use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Crumbs;
 
 Breadcrumbs::register('home', function (Crumbs $crumbs) {
-    $crumbs->push('Home', route('home'));
+    $crumbs->push('Главная', route('home'));
 });
 
 
@@ -128,4 +128,8 @@ Breadcrumbs::register('categories.show', function (Crumbs $crumbs, Category $cat
 Breadcrumbs::register('product.show', function (Crumbs $crumbs, Product $product) {
     $crumbs->parent('categories.show', $product->category);
     $crumbs->push($product->name_original, route('product.show', $product));
+});
+
+Breadcrumbs::register('product.search', function (Crumbs $crumbs) {
+    $crumbs->push('Поиск', route('product.search'));
 });

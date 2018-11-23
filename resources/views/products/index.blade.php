@@ -1,9 +1,14 @@
 @extends('layouts.app')
 
+@if(request('q'))
+    @section('title', 'Поиск - ' .request('q'))
+@else
+    @section('title', $category->name_original)
+@endif
 
 
 @section('content')
-    @if ($categories)
+    @if (!empty($categories))
         <div class="card card-default mb-3">
             <div class="card-header">
                 @if ($category)
@@ -18,12 +23,24 @@
                         <div class="col-4">
                             <ul class="list-unstyled">
                                 @foreach ($chunk as $current)
-                                    <li>{{ $current->id }} - <a href="{{ route('categories.show', $current->id) }}">
-                                            {{ $current->name == null ? $current->name_original : $current->name }}
-                                        </a>
-                                        @if($current->products->count())<span class='badge badge-light'> {{ $current->products->count() }} </span> @endif
-                                    </li>
+
+                                    @if(count($current->descendantsOf($current->id)) && $current->countProducts($current))
+                                        <li>{{ $current->id }} - <a href="{{ route('categories.show', $current->id) }}">
+                                                {{ $current->name == null ? $current->name_original : $current->name }}
+                                            </a>
+                                            <span class='badge badge-light'> {{ $current->countProducts($current) }} </span>
+                                        </li>
+                                    @endif
+                                        @if($current->products->count())
+                                            <li>{{ $current->id }} - <a href="{{ route('categories.show', $current->id) }}">
+                                                    {{ $current->name == null ? $current->name_original : $current->name }}
+                                                </a>
+                                                @if($current->products->count())<span class='badge badge-light'> {{ $current->products->count() }} </span> @endif
+                                            </li>
+                                        @endif
+
                                 @endforeach
+
                             </ul>
                         </div>
                     @endforeach
@@ -34,7 +51,6 @@
 
 
     @if($products)
-
         @foreach ($products->chunk(4) as $chunk)
             <div class="mb-3 row">
                 @foreach ($chunk as $product)
@@ -43,7 +59,7 @@
                             <a href="{{ route('product.show', $product) }}"><img class="card-img-top" src="{{ $product->image }}" alt="Card image cap"></a>
                             <div class="card-body">
                                 <h6 ><a class="text-dark" href="{{ route('product.show', $product) }}">{{ $product->name == null ? $product->name_original : $product->name }}</a></h6>
-
+                                <small>{{ $product->article }}</small>
                                 {{--<p class="card-text">Category: <a href="">{{ $product->category->name_original }}</a></p>--}}
                                 {{--<p class="card-text">Date: {{ $product->created_at }}</p>--}}
                             </div>
@@ -59,8 +75,11 @@
     <div>
         {{ $products->links() }}
     </div>
-
     @endif
+
+
+
+
 
 
 @endsection

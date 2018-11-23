@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Entity\Products\Category;
 use App\Entity\Products\Product\Product;
+use function Complex\theta;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,6 +14,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    public $countesProducts;
+
+
 
 
     public function boot()
@@ -34,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
             $category = new Category();
             $view->with('countCategoryProducts', Product::where('category_id', $category->id)->count());
         });
-
 
     }
 
