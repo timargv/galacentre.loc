@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-require('typeahead/typeahead.js');
+// require('typeahead/typeahead.js');
 require('ekko-lightbox/dist/ekko-lightbox.min.js');
 
 $(document).on("click", '[data-toggle="lightbox"]', function(event) {

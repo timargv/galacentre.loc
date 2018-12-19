@@ -1,3 +1,5 @@
+
+
 $(document).ready(function (){
 	$("#example1").DataTable();
 	$(".select2").select2();
